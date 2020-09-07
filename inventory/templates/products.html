@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+    <section class="text-gray-700 body-font">
+        <div class="container px-6 py-4 mx-auto flex flex-wrap -m-4">
+            {% if not products%}
+                <div class="p-3 px-6 sm:px-2 w-full">
+                    <h2>No items found!! Please add product by clicking on Add Product button.</h2>
+                </div>
+            {% else %}
+                {% for product in products %}
+                    <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
+                        <a href="{{ url_for('product', product_id=product.product_id) }}" class="block relative h-48 rounded overflow-hidden">
+                            <img alt="car" class="object-cover object-center w-full h-full block" src="../static/img/thumbnail-default.jpg">
+                        </a>
+                        <div class="mt-4">
+                            <h2 class="text-gray-900 title-font text-lg font-medium">{{ product.product_name }}</h2>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </section>
+{% endblock content %}
+

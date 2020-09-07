@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+    <section class="text-gray-700 body-font">
+        <div class="container px-6 py-4 mx-auto flex flex-wrap -m-4">    
+            {% if not locations%}
+                <div class="p-3 px-6 sm:px-2 w-full">
+                    <h2>No items found!! Please add location by clicking on Add Product button.</h2>
+                </div>
+            {% else %}
+                {% for location in locations %}
+                    <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
+                        <a href="{{ url_for('location', location_id=location.location_id) }}" class="block relative h-48 rounded overflow-hidden">
+                            <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="../static/img/thumbnail-default.jpg">
+                        </a>
+                        <div class="mt-4">
+                            <h2 class="text-gray-900 title-font text-lg font-medium">{{ location.location_name }}</h2>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </section>
+{% endblock content %}
+
