@@ -1,6 +1,9 @@
-from flask import render_template, url_for, flash, redirect, request
+import os
+import secrets
+from PIL import Image
+from flask import render_template, url_for, flash, redirect, request, current_app
 from inventory import app, db
-from inventory.forms import ProductForm, LocationForm, MovementForm
+from inventory.forms import ProductForm, LocationForm, MovementForm, UpdateProductForm, UpdateLocationForm
 from inventory.models import Product, Location, Movement
 from datetime import datetime
 
@@ -79,7 +82,7 @@ def products():
 def new_product():
     form = ProductForm()
     if form.validate_on_submit():
-        product = Product(product_name=form.product_name.data)
+        product = Product(product_name=form.product_name.data, product_description=form.product_description.data)
         db.session.add(product)
         db.session.commit()
         flash('Your product is successfully added in the product list!', 'green')
@@ -91,19 +94,38 @@ def product(product_id):
     product = Product.query.get_or_404(product_id)
     return render_template('product.html', title='Update Product', product=product)
 
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(current_app.root_path, 'static/img', picture_fn)
+
+    output_size = (256, 256)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+    
+    return picture_fn
+
 @app.route("/product/<int:product_id>/update", methods=['GET', 'POST'])
 def update_product(product_id):
     product = Product.query.get_or_404(product_id)
-    form = ProductForm()
+    form = UpdateProductForm()
+
     if form.validate_on_submit():
+        if form.product_picture.data:
+            picture_file = save_picture(form.product_picture.data)
+            product.product_image_file = picture_file
+        product.product_description = form.product_description.data
         product.product_name = form.product_name.data
         db.session.commit()
         flash('Your product has been updated!', 'green')
         return redirect(url_for('product', product_id=product.product_id))
     elif request.method == 'GET':
         form.product_name.data = product.product_name
+        form.product_description.data = product.product_description
     form.submit.label.text = 'Update Product'
-    return render_template('create_product.html', title='Update Product', form=form, legend='Update Product') 
+    return render_template('create_product.html', title='Update Product', form=form, legend='Update Product')
 
 @app.route("/product/<int:product_id>/delete", methods=['POST'])
 def delete_product(product_id):
@@ -124,7 +146,7 @@ def locations():
 def new_location():
     form = LocationForm()
     if form.validate_on_submit():
-        location = Location(location_name=form.location_name.data)
+        location = Location(location_name=form.location_name.data, location_description=form.location_description.data)
         db.session.add(location)
         db.session.commit()
         flash('Your location is successfully added in the location list!', 'green')
@@ -139,14 +161,20 @@ def location(location_id):
 @app.route("/location/<int:location_id>/update", methods=['GET', 'POST'])
 def update_location(location_id):
     location = Location.query.get_or_404(location_id)
-    form = LocationForm()
+    form = UpdateLocationForm()
     if form.validate_on_submit():
+        if form.location_picture.data:
+            print(form.location_picture.data)
+            picture_file = save_picture(form.location_picture.data)
+            location.location_image_file = picture_file
+        location.location_description = form.location_description.data
         location.location_name = form.location_name.data
         db.session.commit()
         flash('Your location has been updated!', 'green')
         return redirect(url_for('location', location_id=location.location_id))
     elif request.method == 'GET':
         form.location_name.data = location.location_name
+        form.location_description.data = location.location_description
     form.submit.label.text = 'Update Location'
     return render_template('create_location.html', title='Update Location', form=form, legend='Update Location') 
 

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container leading-loose mx-auto flex justify-center mt-8">
-  <form class="max-w-xl m-4 p-10 bg-white rounded shadow-xl flex-grow" method="POST">
+  <form class="max-w-xl m-4 p-10 bg-white rounded shadow-xl flex-grow" method="POST" enctype="multipart/form-data">
     {{  form.hidden_tag() }}
     <p class="text-gray-800 font-medium text-xl">Add New Location</p>
     <div class="locationName">
@@ -18,8 +18,24 @@
         {% endif %}
     </div>
     <div class="locationDesc">
-      <label class="block text-sm text-gray-600" for="product_name">Description</label>
-      <textarea class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" name="productDescription" rows="3"></textarea>
+      <label class="block text-sm text-gray-600" for="location_description">Description</label>
+      {{ form.location_description(class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded",  rows="3", placeholder="Add some description.....") }}
+    </div>
+    <div class="locationDescription">
+        <label class="block text-sm text-gray-600" for="location_name">{{ form.location_picture.label() }}</label>
+        
+        <label class="w-56 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+            <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+            </svg>
+            <span class="mt-2 text-base leading-normal">Select a file</span>
+            {{ form.location_picture(class="hidden", type="file") }}
+        </label>
+        {% if form.location_picture.errors %}
+            {% for error in form.location_picture.errors %}
+                <span class="text-red-600">{{ error }}</span></br>
+            {% endfor %}
+        {% endif %}
     </div>
     <div class="mt-4">
       {{ form.submit(class="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded", type="submit") }}

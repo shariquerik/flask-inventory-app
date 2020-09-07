@@ -9,12 +9,14 @@
             {% else %}
                 {% for location in locations %}
                     <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-                        <a href="{{ url_for('location', location_id=location.location_id) }}" class="block relative h-48 rounded overflow-hidden">
-                            <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="../static/img/thumbnail-default.jpg">
+                        <a href="{{ url_for('location', location_id=location.location_id) }}">
+                            <div class="block relative h-48 rounded overflow-hidden">
+                                <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="{{ url_for('static', filename='img/' + location.location_image_file) }}">
+                            </div>
+                            <div class="mt-4">
+                                <h2 class="text-gray-900 title-font text-lg font-medium">{{ location.location_name }}</h2>
+                            </div>
                         </a>
-                        <div class="mt-4">
-                            <h2 class="text-gray-900 title-font text-lg font-medium">{{ location.location_name }}</h2>
-                        </div>
                     </div>
                 {% endfor %}
             {% endif %}

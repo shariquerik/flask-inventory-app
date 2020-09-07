@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
   <div class="container leading-loose mx-auto flex justify-center mt-8">
-    <form class="max-w-xl m-4 p-10 bg-white rounded shadow-xl flex-grow" method="POST">
+    <form class="max-w-xl m-4 p-10 bg-white rounded shadow-xl flex-grow" method="POST" enctype="multipart/form-data">
       {{  form.hidden_tag() }}
       <p class="text-gray-800 font-medium text-xl">Add New Product</p>
       <div class="productName">
@@ -19,8 +19,17 @@
           {% endif %}
       </div>
       <div class="productDesc">
-        <label class="block text-sm text-gray-600" for="product_name">Description</label>
-        <textarea class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" name="productDescription" rows="3"></textarea>
+        <label class="block text-sm text-gray-600" for="product_description">Description</label>
+        {{ form.product_description(class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded",  rows="3", placeholder="Add some description.....") }}
+      </div>
+      <div class="form-group">
+          {{ form.product_picture.label() }}
+          {{ form.product_picture() }}
+          {% if form.product_picture.errors %}
+              {% for error in form.product_picture.errors %}
+                  <span class="text-red-600">{{ error }}</span></br>
+              {% endfor %}
+          {% endif %}
       </div>
       <div class="mt-4">
         {{ form.submit(class="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded", type="submit") }}

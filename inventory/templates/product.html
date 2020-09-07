@@ -3,13 +3,19 @@
 <section class="text-gray-700 body-font">
     <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
         <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
-        <img class="object-cover object-center rounded" alt="hero" src="../static/img/thumbnail-default.jpg">
+            <img alt="car" class="object-cover object-center w-full h-full block" src="{{ url_for('static', filename='img/' + product.product_image_file) }}">
         </div>
         <div class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
             <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
                 {{ product.product_name }}
             </h1>
-            <p class="mb-8 leading-relaxed">Copper mug try-hard pitchfork pour-over freegan heirloom neutra air plant cold-pressed tacos poke beard tote bag. Heirloom echo park mlkshk tote bag selvage hot chicken authentic tumeric truffaut hexagon try-hard chambray.</p>
+                <p class="mb-8 leading-relaxed">
+                    {% if not product.product_description %}
+                        This is a default description for product, please update the product with a brief description.
+                    {% else %}
+                        {{ product.product_description }}
+                    {% endif %}
+                </p>
             <div class="flex justify-center">
                 <a href="{{ url_for('update_product', product_id=product.product_id) }}" class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer">Edit</a>
                 <!-- <form action="{{ url_for('delete_product', product_id=product.product_id) }}" method="POST">

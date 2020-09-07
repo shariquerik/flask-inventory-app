@@ -86,7 +86,7 @@
                 {% for category, message in messages %}
                     <div class="alert-toast fixed bottom-0 right-0 m-8 w-5/6 md:w-full max-w-sm">
                         <input type="checkbox" class="hidden" id="footertoast">
-                        <label title="close" for="footertoast" class="close cursor-pointer alert flex flex-row items-center bg-{{ category }}-200 p-5 rounded border-b-2 border-{{ category }}-300">
+                        <label title="close" for="footertoast" class="relative close cursor-pointer alert flex flex-row items-center bg-{{ category }}-200 p-5 rounded border-b-2 border-{{ category }}-300">
                             <div class="alert-icon flex items-center bg-{{ category }}-100 border-2 border-{{ category }}-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
                                 <span class="text-{{ category }}-500">
                                     <svg fill="currentColor" viewBox="0 0 20 20" class="h-6 w-6">
@@ -98,13 +98,13 @@
                                     </svg>
                                 </span>
                             </div>
-                            <div class="alert-content ml-4 relative">
+                            <div class="alert-content ml-4">
                                 <div class="alert-title font-semibold text-lg text-{{ category }}-800">
                                     {% if category == 'red' %}Error{% elif category == 'green' %}Success{% endif %}
                                 </div>
-                                <div class="flex items-start justify-between  alert-description text-sm text-{{ category }}-600">
+                                <div class="flex items-start justify-between alert-description text-sm text-{{ category }}-600">
                                     {{ message }}
-                                    <svg class="absolute right-0 top-0 fill-current text-{{ category }}-800" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                                    <svg class="absolute right-0 top-0 bottom-0 mt-3 mr-3 fill-current text-{{ category }}-800" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
                                         <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
                                     </svg>
                                 </div>
