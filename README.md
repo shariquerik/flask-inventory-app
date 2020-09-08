@@ -63,20 +63,20 @@ To develop this project:
 Below are the screenshots of the views available in application. 
 
 - ### Products:
-This view helps to manage products:
-![Products page](screenshots/allProducts.png?raw=true "Products View")
+This view shows list of products:
+![Products page](screenshots/allProducts.PNG "Products View")
 
 
 - ### Locations:
-This view helps to manage Warehouse Locations:
-![Locations page](screenshots/allLocation.png?raw=true "Locations View")
+This view shows list of Warehouse Locations:
+![Locations page](screenshots/allLocations.PNG "Locations View")
 
 
 - ### Product Movements:
-This view helps to make data entry of product movement:
-![Product Movements page](screenshots/allMovement.png?raw=true "Movements View")
+This view shows the history of product movements:
+![Product Movements page](screenshots/allMovements.PNG "Movements View")
 
 
 - ### Dashboard:
 This reports shows the balance quantity in each location:
-![Dasboard page](screenshots/dashboard.png?raw=true "Dashboard")
+![Dasboard page](screenshots/dashboard.PNG "Dashboard")
