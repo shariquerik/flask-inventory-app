@@ -9,7 +9,7 @@
             {% else %}
                 {% for product in products %}
                     <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-                        <a href="{{ url_for('product', product_id=product.product_id) }}">
+                        <a href="{{ url_for('products_bp.product', product_id=product.product_id) }}">
                             <div class="block relative h-48 rounded overflow-hidden">
                                 <img alt="car" class="object-cover object-center w-full h-full block" src="{{ url_for('static', filename='img/' + product.product_image_file) }}">
                             </div>

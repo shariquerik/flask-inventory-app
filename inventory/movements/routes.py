@@ -1,39 +1,13 @@
-from flask import render_template, url_for, flash, redirect, request
-from inventory import app, db
-from inventory.forms import ProductForm, LocationForm, MovementForm, UpdateProductForm, UpdateLocationForm
+from flask import render_template, url_for, flash, redirect, request, Blueprint
+from inventory import db
+from inventory.movements.forms import MovementForm
 from inventory.models import Product, Location, Movement, StaticMovement
 from datetime import datetime
-from inventory.utils import save_picture
 
-# Home
-@app.route('/home')
-def home():
-    return render_template('home.html')
-
-# Dashboard
-@app.route('/')
-@app.route("/dashboard")
-def dashboard():
-    movements = db.session.query(Movement.to_location, Movement.product_id).filter(Movement.from_location=="").distinct(Movement.to_location).all()
-    product = Product.query
-    qty = Movement.query
-    return render_template('dashboard.html', title='Dashboard', movements=movements, qty=qty, product=product)
+movements_bp = Blueprint('movements_bp', __name__)
 
 
-# Search
-@app.route('/search_product')
-def search_product():
-    query = request.args.get('query')
-    products = Product.query.filter(Product.product_name.contains(query)).all()
-    return render_template('products.html', products=products, title='Product')
-
-@app.route('/search_location')
-def search_location():
-    query = request.args.get('query')
-    locations = Location.query.filter(Location.location_name.contains(query)).all()
-    return render_template('locations.html', locations=locations, title='Location')
-
-@app.route('/search_movement')
+@movements_bp.route('/search_movement')
 def search_movement():
     query = request.args.get('query')
     product = Product.query.filter(Product.product_name.contains(query)).all()
@@ -50,130 +24,6 @@ def search_movement():
     movements = list(dict.fromkeys(movements))
     return render_template('movements.html', movements=movements, title='Movement', products=products, locations=locations)
 
-@app.route('/search_dashboard')
-def search_dashboard():
-    q = request.args.get('query')
-    movements = []
-    product = Product.query.filter(Product.product_name.contains(q)).all()
-    lists = db.session.query(Movement.to_location, Movement.product_id).filter(Movement.from_location=="").distinct(Movement.to_location).all()
-    for i in lists:
-        if q.lower() in i[0].lower():
-            movements.append(i)
-    if product:
-        for p in product:
-            for i in lists:
-                if(p.product_id == i[1]):
-                    movements.append(i)
-    product = Product.query
-    qty = Movement.query
-    movements = list(dict.fromkeys(movements))
-    return render_template('dashboard.html', title='Dashboard', movements=movements, qty=qty, product=product)
-
-
-# Product
-@app.route('/products', methods=['GET', 'POST'])
-def products():
-    products = Product.query.order_by(Product.product_name).all()
-    return render_template('products.html', products=products, title='Product')
-
-@app.route('/products/new', methods=['GET', 'POST'])
-def new_product():
-    form = ProductForm()
-    if form.validate_on_submit():
-        if form.product_picture.data:
-            picture_file = save_picture(form.product_picture.data)
-        else:
-            picture_file = 'default-cars.jpeg'
-        product = Product(product_name=form.product_name.data, product_description=form.product_description.data, product_image_file=picture_file)
-        db.session.add(product)
-        db.session.commit()
-        flash('Your product is successfully added in the product list!', 'green')
-        return redirect(url_for('products'))
-    return render_template('create_product.html', form=form, title='New Product')
-
-@app.route("/product/<int:product_id>")
-def product(product_id):
-    product = Product.query.get_or_404(product_id)
-    return render_template('product.html', title='Update Product', product=product)
-
-@app.route("/product/<int:product_id>/update", methods=['GET', 'POST'])
-def update_product(product_id):
-    product = Product.query.get_or_404(product_id)
-    form = UpdateProductForm()
-
-    if not product.product_name == form.product_name.data:
-        form = ProductForm()
-
-    if form.validate_on_submit():
-        if form.product_picture.data:
-            picture_file = save_picture(form.product_picture.data)
-            product.product_image_file = picture_file
-        product.product_description = form.product_description.data
-        product.product_name = form.product_name.data
-        db.session.commit()
-        flash('Your product has been updated!', 'green')
-        return redirect(url_for('product', product_id=product.product_id))
-    elif request.method == 'GET':
-        form.product_name.data = product.product_name
-        form.product_description.data = product.product_description
-    form.submit.label.text = 'Update Product'
-    return render_template('create_product.html', title='Update Product', form=form, legend='Update Product')
-
-
-
-# Location
-@app.route('/locations', methods=['GET'])
-def locations():
-    locations = Location.query.order_by(Location.location_name).all()
-    return render_template('locations.html', locations=locations, title='Location')
-
-@app.route('/locations/new', methods=['GET', 'POST'])
-def new_location():
-    form = LocationForm()
-    if form.validate_on_submit():
-        if form.location_picture.data:
-            picture_file = save_picture(form.location_picture.data)
-        else:
-            picture_file = 'thumbnail-default.jpg'
-        location = Location(location_name=form.location_name.data, location_description=form.location_description.data, location_image_file=picture_file)
-        db.session.add(location)
-        db.session.commit()
-        flash('Your location is successfully added in the location list!', 'green')
-        return redirect(url_for('locations'))
-    return render_template('create_location.html', form=form, title='New Location')
-
-@app.route("/location/<int:location_id>")
-def location(location_id):
-    location = Location.query.get_or_404(location_id)
-    return render_template('location.html', title='Update Location', location=location)
-
-@app.route("/location/<int:location_id>/update", methods=['GET', 'POST'])
-def update_location(location_id):
-    location = Location.query.get_or_404(location_id)
-    form = UpdateLocationForm()
-
-    if not location.location_name == form.location_name.data:
-        form = LocationForm()
-
-    if form.validate_on_submit():
-        if form.location_picture.data:
-            print(form.location_picture.data)
-            picture_file = save_picture(form.location_picture.data)
-            location.location_image_file = picture_file
-        location.location_description = form.location_description.data
-        location.location_name = form.location_name.data
-        db.session.commit()
-        flash('Your location has been updated!', 'green')
-        return redirect(url_for('location', location_id=location.location_id))
-    elif request.method == 'GET':
-        form.location_name.data = location.location_name
-        form.location_description.data = location.location_description
-    form.submit.label.text = 'Update Location'
-    return render_template('create_location.html', title='Update Location', form=form, legend='Update Location') 
-
-
-
-# Movement
 
 def get_choices(form):
     location_choices = [(0, "---")]+[(location.location_id, location.location_name) for location in Location.query.all()]
@@ -225,15 +75,14 @@ def error_conditions(from_location, to_location, qty, existing_prd_in_from_locat
         return 'No error'
 
 
-
-@app.route("/movements")
+@movements_bp.route("/movements")
 def movements():
     movements = StaticMovement.query.order_by(StaticMovement.timestamp.desc()).all()
     products = Product.query
     locations = Location.query
     return render_template('movements.html', title='Movement',movements=movements, products=products, locations=locations)
 
-@app.route("/movements/new", methods=['GET', 'POST'])
+@movements_bp.route("/movements/new", methods=['GET', 'POST'])
 def new_movement():
     form = MovementForm()
 
@@ -254,7 +103,7 @@ def new_movement():
     if form.validate_on_submit():
         error = error_conditions(from_location, to_location, qty, existing_prd_in_from_location, existing_prd_in_to_location, 'new', '')
         if(error != 'No error'):
-            return redirect(url_for('new_movement'))
+            return redirect(url_for('movements_bp.new_movement'))
         else:
             #qty++ in to_location
             if existing_movement and existing_movement.from_location == "" and existing_movement.to_location != "":
@@ -290,17 +139,17 @@ def new_movement():
         db.session.commit()
         
         flash('Your product movement is successfully added in the product movement list!', 'green')
-        return redirect(url_for('movements'))
+        return redirect(url_for('movements_bp.movements'))
     return render_template('create_movement.html', form=form, legend='New Product Movement')
 
-@app.route("/movement/<int:movement_id>")
-@app.route("/movement/<int:movement_id>/<int:qty>")
+@movements_bp.route("/movement/<int:movement_id>")
+@movements_bp.route("/movement/<int:movement_id>/<int:qty>")
 def movement(movement_id, qty=None):
     movement = StaticMovement.query.get_or_404(movement_id)
     products = Product.query
     return render_template('movement.html', title='Update Moved Product', movement=movement, products=products, qty=qty)
 
-@app.route("/movement/<int:movement_id>/update", methods=['GET', 'POST'])
+@movements_bp.route("/movement/<int:movement_id>/update", methods=['GET', 'POST'])
 def update_movement(movement_id):
     
     static_movement = StaticMovement.query.get_or_404(movement_id)
@@ -365,7 +214,7 @@ def update_movement(movement_id):
             db.session.commit()
 
             flash('Your product movement has been updated!', 'green')
-            return redirect(url_for('movement', movement_id=static_movement.movement_id))
+            return redirect(url_for('movements_bp.movement', movement_id=static_movement.movement_id))
     elif request.method == 'GET':
         form.from_location.data = convert_location_name_to_id(static_movement.from_location)
         form.to_location.data = convert_location_name_to_id(static_movement.to_location)

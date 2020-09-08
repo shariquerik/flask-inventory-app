@@ -9,7 +9,7 @@
             {% else %}
                 {% for location in locations %}
                     <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-                        <a href="{{ url_for('location', location_id=location.location_id) }}">
+                        <a href="{{ url_for('locations_bp.location', location_id=location.location_id) }}">
                             <div class="block relative h-48 rounded overflow-hidden">
                                 <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="{{ url_for('static', filename='img/' + location.location_image_file) }}">
                             </div>

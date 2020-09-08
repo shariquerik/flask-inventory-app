@@ -39,10 +39,10 @@
                 <span class="ml-3 text-2xl">Inventory App</span>
             </a>
             <nav class="lg:ml-auto flex flex-wrap text-base sm:text-lg font-semibold mt-2 -mb-4">
-                <a href="{{ url_for('dashboard') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Dashboard' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-4 sm:px-8 py-4">Dashboard</div></a>
-                <a href="{{ url_for('products') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Product' or title == 'search_product' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-4 sm:px-8 py-4">Products</div></a>
-                <a href="{{ url_for('locations') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Location' or title == 'search_location' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-4 sm:px-8 py-4">Locations</div></a>
-                <a href="{{ url_for('movements') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Movement' or title == 'search_movement' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-4 sm:px-8 py-4">Movements</div></a>
+                <a href="{{ url_for('dashboard_bp.dashboard') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Dashboard' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-4 sm:px-8 py-4">Dashboard</div></a>
+                <a href="{{ url_for('products_bp.products') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Product' or title == 'search_product' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-4 sm:px-8 py-4">Products</div></a>
+                <a href="{{ url_for('locations_bp.locations') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Location' or title == 'search_location' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-4 sm:px-8 py-4">Locations</div></a>
+                <a href="{{ url_for('movements_bp.movements') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Movement' or title == 'search_movement' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-4 sm:px-8 py-4">Movements</div></a>
             </nav>
         </div>
         <!-- <div class="container mx-auto flex-wrap flex-col md:flex-row items-center"></div> -->
@@ -57,11 +57,11 @@
                     <div class="flex max-w-lg sm:flex-1">
                         <div class="flex content-center flex-wrap mr-2 ml-8">
                             {% if title == 'Product' %}
-                                <a href="{{ url_for('new_product') }}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded cursor-pointer" >Add Product</a>
+                                <a href="{{ url_for('products_bp.new_product') }}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded cursor-pointer" >Add Product</a>
                             {% elif title == 'Location' %}
-                                <a href="{{ url_for('new_location') }}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded cursor-pointer">Add Location</a>
+                                <a href="{{ url_for('locations_bp.new_location') }}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded cursor-pointer">Add Location</a>
                             {% elif title == 'Movement' %}
-                                <a href="{{ url_for('new_movement') }}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded cursor-pointer">Move Item</a>
+                                <a href="{{ url_for('movements_bp.new_movement') }}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded cursor-pointer">Move Item</a>
                             {% endif %}
                         </div>
                         <div class="flex content-center flex-wrap relative flex-1">
