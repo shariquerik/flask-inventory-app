@@ -29,7 +29,7 @@
         </a>
         <div class="flex justify-between ml-3 -mr-3 mt-2">
             <div class="p-2 text-gray-600">
-                {% if qty == None %}{{ movement.qty }}{% else %}{{ qty }}{% endif %} {{ products.get(movement.product_id).product_name }} was 
+                {{ qty }} {{ products.get(movement.product_id).product_name }} was 
                 {% if movement.from_location and movement.to_location %}  
                     moved from {{ movement.from_location }} location to {{ movement.to_location }} location.
                 {% elif not movement.from_location %}
@@ -40,9 +40,6 @@
             </div>
             <div class="flex content-end">
                 <a href="{{ url_for('update_movement', movement_id=movement.movement_id) }}" class="inline-flex self-center text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer">Edit</a>
-                <!-- <form class="inline-flex self-center" action="{{ url_for('delete_movement', movement_id=movement.movement_id) }}" method="POST">
-                    <input type="submit" value="Delete" class="ml-4 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg cursor-pointer">
-                </form> -->
             </div>
         </div>
     </div>
