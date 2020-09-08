@@ -34,7 +34,7 @@ def new_location():
         db.session.commit()
         flash('Your location is successfully added in the location list!', 'green')
         return redirect(url_for('locations_bp.locations'))
-    return render_template('create_location.html', form=form, title='New Location')
+    return render_template('create_location.html', form=form, title='Add New Location')
 
 @locations_bp.route("/location/<int:location_id>")
 def location(location_id):

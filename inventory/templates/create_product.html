@@ -3,7 +3,7 @@
   <div class="container leading-loose mx-auto flex justify-center mt-8">
     <form class="max-w-xl m-4 p-10 bg-white rounded shadow-xl flex-grow" method="POST" enctype="multipart/form-data">
       {{  form.hidden_tag() }}
-      <p class="text-gray-800 font-medium text-xl">Add New Product</p>
+      <p class="text-gray-800 font-medium text-xl">{{ title }}</p>
       <div class="productName">
         <label class="block text-sm text-gray-600" for="product_name">{{ form.product_name.label }}</label>
         

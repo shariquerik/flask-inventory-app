@@ -140,7 +140,7 @@ def new_movement():
         
         flash('Your product movement is successfully added in the product movement list!', 'green')
         return redirect(url_for('movements_bp.movements'))
-    return render_template('create_movement.html', form=form, legend='New Product Movement')
+    return render_template('create_movement.html', form=form, legend='New Product Movement', title='Move Product')
 
 @movements_bp.route("/movement/<int:movement_id>")
 @movements_bp.route("/movement/<int:movement_id>/<int:qty>")

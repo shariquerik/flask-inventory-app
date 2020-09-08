@@ -32,7 +32,7 @@ def new_product():
         db.session.commit()
         flash('Your product is successfully added in the product list!', 'green')
         return redirect(url_for('products_bp.products'))
-    return render_template('create_product.html', form=form, title='New Product')
+    return render_template('create_product.html', form=form, title='Add New Product')
 
 @products_bp.route("/product/<int:product_id>")
 def product(product_id):
