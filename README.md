@@ -4,6 +4,8 @@
 
 An Inventory Management Web Application built on [Flask](http://flask.pocoo.org/) used to manage inventory of a list of products in respective warehouses. User can move product from one location to another, can only add product to location also can remove from the location.
 
+I have deployed the app on heroku, go on https://heroku-inventory.herokuapp.com/ to check the app.
+
 ### Prerequisites
 
 To run this system you will need :
