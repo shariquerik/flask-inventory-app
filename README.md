@@ -21,7 +21,7 @@ To develop this project:
 
     ```python
     $ git clone https://github.com/shariquerik/flask-inventory-app.git
-    $ cd flask-inventory-app-master
+    $ cd flask-inventory-app
     ```
 
 2.  Create a virtual environment:
