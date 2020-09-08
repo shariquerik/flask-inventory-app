@@ -63,17 +63,17 @@ To develop this project:
 Below are the screenshots of the views available in application. 
 
 - ### Products:
-This view helps to manage products:
+This view shows list of products:
 ![Products page](screenshots/allProducts.PNG "Products View")
 
 
 - ### Locations:
-This view helps to manage Warehouse Locations:
+This view shows list of Warehouse Locations:
 ![Locations page](screenshots/allLocations.PNG "Locations View")
 
 
 - ### Product Movements:
-This view helps to make data entry of product movement:
+This view shows the history of product movements:
 ![Product Movements page](screenshots/allMovements.PNG "Movements View")
 
 
