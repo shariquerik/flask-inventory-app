@@ -3,31 +3,9 @@ from inventory import db
 from inventory.movements.forms import MovementForm
 from inventory.models import Product, Location, Movement, StaticMovement
 from datetime import datetime
-import pytz
-
-utc_now = pytz.utc.localize(datetime.utcnow())
-datetime = utc_now.astimezone(pytz.timezone("Asia/Kolkata"))
+from pytz import timezone
 
 movements_bp = Blueprint('movements_bp', __name__)
-
-
-@movements_bp.route('/search_movement')
-def search_movement():
-    query = request.args.get('query')
-    product = Product.query.filter(Product.product_name.contains(query)).all()
-    from_location = []
-    to_location = []
-    movements = []
-    movements = StaticMovement.query.filter(StaticMovement.from_location.contains(query)).all()
-    movements = movements + StaticMovement.query.filter(StaticMovement.to_location.contains(query)).all()
-    if product:
-        for p in product:
-            movements = movements + StaticMovement.query.filter(StaticMovement.product_id==p.product_id).all()
-    products = Product.query
-    locations = Location.query
-    movements = list(dict.fromkeys(movements))
-    return render_template('movements.html', movements=movements, title='Movement', products=products, locations=locations)
-
 
 def get_choices(form):
     location_choices = [(0, "---")]+[(location.location_id, location.location_name) for location in Location.query.all()]
@@ -78,6 +56,28 @@ def error_conditions(from_location, to_location, qty, existing_prd_in_from_locat
     else:
         return 'No error'
 
+def date_convertion():
+    now_utc = datetime.now(timezone('UTC'))
+    now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
+    return now_asia
+
+
+@movements_bp.route('/search_movement')
+def search_movement():
+    query = request.args.get('query')
+    product = Product.query.filter(Product.product_name.contains(query)).all()
+    from_location = []
+    to_location = []
+    movements = []
+    movements = StaticMovement.query.filter(StaticMovement.from_location.contains(query)).all()
+    movements = movements + StaticMovement.query.filter(StaticMovement.to_location.contains(query)).all()
+    if product:
+        for p in product:
+            movements = movements + StaticMovement.query.filter(StaticMovement.product_id==p.product_id).all()
+    products = Product.query
+    locations = Location.query
+    movements = list(dict.fromkeys(movements))
+    return render_template('movements.html', movements=movements, title='Movement', products=products, locations=locations)
 
 @movements_bp.route("/movements")
 def movements():
@@ -126,19 +126,19 @@ def new_movement():
             elif existing_prd_in_from_location and not existing_prd_in_to_location:
                 existing_prd_in_from_location.qty = existing_prd_in_from_location.qty - qty
                 if to_location != "":
-                    product_to = Movement(from_location="", to_location=to_location, product_id=product_id, qty=qty)
+                    product_to = Movement(from_location="", to_location=to_location, product_id=product_id, qty=qty,timestamp=date_convertion())
                     db.session.add(product_to)
                     db.session.commit()
 
             else:
-                movement = Movement(from_location=from_location, to_location=to_location, product_id=product_id, qty=qty)
+                movement = Movement(from_location=from_location, to_location=to_location, product_id=product_id, qty=qty,timestamp=date_convertion())
                 db.session.add(movement)
 
         if from_location != "" and to_location != "":
-            movement = Movement(from_location=from_location, to_location=to_location, product_id=product_id, qty=qty)
+            movement = Movement(from_location=from_location, to_location=to_location, product_id=product_id, qty=qty,timestamp=date_convertion())
             db.session.add(movement)
 
-        static_movement = StaticMovement(from_location=from_location, to_location=to_location, product_id=product_id, qty=qty)
+        static_movement = StaticMovement(from_location=from_location, to_location=to_location, product_id=product_id, qty=qty,timestamp=date_convertion())
         db.session.add(static_movement)
         db.session.commit()
         
@@ -201,19 +201,20 @@ def update_movement(movement_id):
             else:
                 pass
 
+
             if existing_movement:
                 existing_movement.from_location = from_location
                 existing_movement.to_location = to_location
                 existing_movement.product_id = product_id
                 existing_movement.qty = qty
-                existing_movement.timestamp = datetime.now()
+                existing_movement.timestamp = date_convertion()
             
 
             static_movement.from_location = from_location
             static_movement.to_location = to_location
             static_movement.product_id = product_id
             static_movement.qty = qty
-            static_movement.timestamp = datetime.now()
+            static_movement.timestamp = date_convertion()
 
             db.session.commit()
 

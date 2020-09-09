@@ -1,9 +1,5 @@
 from inventory import db
 from datetime import datetime
-import pytz
-
-utc_now = pytz.utc.localize(datetime.utcnow())
-datetime = utc_now.astimezone(pytz.timezone("Asia/Kolkata"))
 
 
 class Product(db.Model):
@@ -28,7 +24,7 @@ class Location(db.Model):
 
 class Movement(db.Model):
     movement_id = db.Column(db.Integer, primary_key=True)
-    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.now())
     from_location = db.Column(db.String(20), db.ForeignKey('location.location_id'))
     to_location = db.Column(db.String(20), db.ForeignKey('location.location_id'))
     product_id = db.Column(db.Integer, db.ForeignKey('product.product_id'), nullable=False)
@@ -40,7 +36,7 @@ class Movement(db.Model):
 
 class StaticMovement(db.Model):
     movement_id = db.Column(db.Integer, primary_key=True)
-    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.now())
     from_location = db.Column(db.String(20), db.ForeignKey('location.location_id'))
     to_location = db.Column(db.String(20), db.ForeignKey('location.location_id'))
     product_id = db.Column(db.Integer, db.ForeignKey('product.product_id'), nullable=False)
