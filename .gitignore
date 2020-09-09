@@ -8,7 +8,7 @@ __pycache__/
 node_modules/
 
 # taiwind styles.css
-inventory/static/styles.css
+# inventory/static/styles.css
 
 # Distribution / packaging
 .Python
