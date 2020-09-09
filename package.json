@@ -4,12 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-css": "NODE_ENV=production tailwindcss build src/styles.css -o inventory/static/styles.css"
+    "build-css": "cross-env NODE_ENV=production tailwindcss build src/styles.css -o inventory/static/styles.css"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fullhuman/postcss-purgecss": "^2.3.0",
     "tailwindcss": "^1.7.6"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2"
   }
 }
