@@ -29,7 +29,7 @@
         </a>
         <div class="flex justify-between ml-3 -mr-3 mt-2">
             <div class="p-2 text-gray-600">
-                {{ qty }} {{ products.get(movement.product_id).product_name }} was 
+                {% if qty == None %}{{ movement.qty }}{% else %}{{ qty }}{% endif %} {{ products.get(movement.product_id).product_name }} was 
                 {% if movement.from_location and movement.to_location %}  
                     moved from {{ movement.from_location }} location to {{ movement.to_location }} location.
                 {% elif not movement.from_location %}
