@@ -67,7 +67,7 @@
                             <h1 class="text-2xl font-semibold">{{ title }}s</h1>
                         </div>
                         <div class="flex sm:hidden self-center text-xs content-center pr-2">
-                            {% if title != 'Dashboard' %}
+                            {% if title != 'Dashboard' and title != 'Search Result' %}
                                 <a href="{% if title == 'Product' %} {{ url_for('products_bp.new_product') }} {% elif title == 'Location' %} {{ url_for('locations_bp.new_location') }} {% elif title == 'Movement' %} {{ url_for('movements_bp.new_movement') }} {% endif %}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-3 px-3 rounded-full cursor-pointer" >
                                     <svg class="fill-current text-gray-100-600 h-4 w-4" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
                                 </a>
