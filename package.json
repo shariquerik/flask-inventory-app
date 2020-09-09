@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^2.3.0",
+    "autoprefixer": "^9.8.6",
     "tailwindcss": "^1.7.6"
   },
   "devDependencies": {
