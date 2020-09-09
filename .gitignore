@@ -7,7 +7,7 @@ __pycache__/
 
 node_modules/
 
-inventory/static/styles.css
+inventory/static/styles.css/
 
 # Distribution / packaging
 .Python
