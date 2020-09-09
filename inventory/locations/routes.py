@@ -14,7 +14,7 @@ locations_bp = Blueprint('locations_bp', __name__)
 def search_location():
     query = request.args.get('query')
     locations = Location.query.filter(Location.location_name.contains(query)).all()
-    return render_template('locations.html', locations=locations, title='Location', label='Search Location')
+    return render_template('locations.html', locations=locations, title='Search Result', label='Location')
 
 @locations_bp.route('/locations', methods=['GET'])
 def locations():
@@ -34,12 +34,12 @@ def new_location():
         db.session.commit()
         flash('Your location is successfully added in the location list!', 'green')
         return redirect(url_for('locations_bp.locations'))
-    return render_template('create_location.html', form=form, title='Add New Location')
+    return render_template('create_location.html', form=form, title='Add New Location', label='Location')
 
 @locations_bp.route("/location/<int:location_id>")
 def location(location_id):
     location = Location.query.get_or_404(location_id)
-    return render_template('location.html', title='Update Location', location=location)
+    return render_template('location.html', title='Update Location', location=location, label='Location')
 
 @locations_bp.route("/location/<int:location_id>/update", methods=['GET', 'POST'])
 def update_location(location_id):
@@ -63,4 +63,4 @@ def update_location(location_id):
         form.location_name.data = location.location_name
         form.location_description.data = location.location_description
     form.submit.label.text = 'Update Location'
-    return render_template('create_location.html', title='Update Location', form=form, legend='Update Location') 
+    return render_template('create_location.html', title='Update Location', form=form, label='Location') 

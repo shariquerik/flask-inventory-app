@@ -12,7 +12,7 @@ products_bp = Blueprint('products_bp', __name__)
 def search_product():
     query = request.args.get('query')
     products = Product.query.filter(Product.product_name.contains(query)).all()
-    return render_template('products.html', products=products, title='Product', label='Search Product')
+    return render_template('products.html', products=products, title='Search Result', label='Product')
 
 @products_bp.route('/products', methods=['GET', 'POST'])
 def products():
@@ -32,12 +32,12 @@ def new_product():
         db.session.commit()
         flash('Your product is successfully added in the product list!', 'green')
         return redirect(url_for('products_bp.products'))
-    return render_template('create_product.html', form=form, title='Add New Product')
+    return render_template('create_product.html', form=form, title='Add New Product', label='Product')
 
 @products_bp.route("/product/<int:product_id>")
 def product(product_id):
     product = Product.query.get_or_404(product_id)
-    return render_template('product.html', title='Update Product', product=product)
+    return render_template('product.html', title='Update Product', product=product, label='Product')
 
 @products_bp.route("/product/<int:product_id>/update", methods=['GET', 'POST'])
 def update_product(product_id):
@@ -60,5 +60,5 @@ def update_product(product_id):
         form.product_name.data = product.product_name
         form.product_description.data = product.product_description
     form.submit.label.text = 'Update Product'
-    return render_template('create_product.html', title='Update Product', form=form, legend='Update Product')
+    return render_template('create_product.html', title='Update Product', form=form, label='Product')
 

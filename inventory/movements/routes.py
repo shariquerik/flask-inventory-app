@@ -77,7 +77,7 @@ def search_movement():
     products = Product.query
     locations = Location.query
     movements = list(dict.fromkeys(movements))
-    return render_template('movements.html', movements=movements, title='Movement', products=products, locations=locations, label='Search Movement')
+    return render_template('movements.html', movements=movements, title='Search Result', products=products, locations=locations, label='Movement')
 
 @movements_bp.route("/movements")
 def movements():
@@ -144,14 +144,14 @@ def new_movement():
         
         flash('Your product movement is successfully added in the product movement list!', 'green')
         return redirect(url_for('movements_bp.movements'))
-    return render_template('create_movement.html', form=form, legend='New Product Movement', title='Move Product')
+    return render_template('create_movement.html', form=form, legend='New Product Movement', title='Move Product', label='Movement')
 
 @movements_bp.route("/movement/<int:movement_id>")
 @movements_bp.route("/movement/<int:movement_id>/<int:qty>")
 def movement(movement_id, qty=None):
     movement = StaticMovement.query.get_or_404(movement_id)
     products = Product.query
-    return render_template('movement.html', title='Update Moved Product', movement=movement, products=products, qty=qty)
+    return render_template('movement.html', title='Update Moved Product', movement=movement, products=products, qty=qty, label='Movement')
 
 @movements_bp.route("/movement/<int:movement_id>/update", methods=['GET', 'POST'])
 def update_movement(movement_id):
@@ -230,4 +230,4 @@ def update_movement(movement_id):
         form.product_id.data = static_movement.product_id
         form.qty.data = static_movement.qty
     form.submit.label.text = 'Update Product Movement'
-    return render_template('create_movement.html', title='Update Moved Product', form=form, legend='Update Moved Product')
+    return render_template('create_movement.html', title='Update Moved Product', form=form, label='Movement')
