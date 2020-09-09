@@ -50,7 +50,7 @@ def error_conditions(from_location, to_location, qty, existing_prd_in_from_locat
         flash('The product is not available in '+ from_location +' location', 'red')
 
     #Storage Capacity Error
-    elif qty > 100 or (existing_prd_in_to_location and existing_prd_in_to_location.qty + qty > 100):
+    elif qty > 100 or (existing_prd_in_to_location and existing_prd_in_to_location.qty + qty - update_qty > 100):
         flash('The quantity of product exceeds the storage capacity(100) of '+to_location+' location. You can only move '+str(100-existing_prd_in_to_location.qty) + ' products.', 'red')
 
     else:
@@ -105,7 +105,7 @@ def new_movement():
     existing_prd_in_to_location = movement_exist(product_id, "", to_location)
 
     if form.validate_on_submit():
-        error = error_conditions(from_location, to_location, qty, existing_prd_in_from_location, existing_prd_in_to_location, 'new', '')
+        error = error_conditions(from_location, to_location, qty, existing_prd_in_from_location, existing_prd_in_to_location, 'new', 0)
         if(error != 'No error'):
             return redirect(url_for('movements_bp.new_movement'))
         else:
@@ -178,7 +178,11 @@ def update_movement(movement_id):
         if(error == 'No error'):
             #qty++ in to_location
             if existing_movement and existing_movement.from_location == "" and existing_movement.to_location != "":
+                print(existing_prd_in_to_location.qty)
+                print(qty)
+                print(static_movement.qty)
                 existing_prd_in_to_location.qty = existing_prd_in_to_location.qty + qty - static_movement.qty
+                print(existing_prd_in_to_location.qty)
 
             #qty-- in from_location
             elif existing_movement and existing_movement.from_location != "" and existing_movement.to_location == "":
@@ -202,7 +206,7 @@ def update_movement(movement_id):
                 pass
 
 
-            if existing_movement:
+            if to_location != '' and from_location != '':
                 existing_movement.from_location = from_location
                 existing_movement.to_location = to_location
                 existing_movement.product_id = product_id
