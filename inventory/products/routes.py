@@ -12,7 +12,7 @@ products_bp = Blueprint('products_bp', __name__)
 def search_product():
     query = request.args.get('query')
     products = Product.query.filter(Product.product_name.contains(query)).all()
-    return render_template('products.html', products=products, title='Product')
+    return render_template('products.html', products=products, title='Product', label='Search Product')
 
 @products_bp.route('/products', methods=['GET', 'POST'])
 def products():

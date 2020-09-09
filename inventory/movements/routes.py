@@ -77,7 +77,7 @@ def search_movement():
     products = Product.query
     locations = Location.query
     movements = list(dict.fromkeys(movements))
-    return render_template('movements.html', movements=movements, title='Movement', products=products, locations=locations)
+    return render_template('movements.html', movements=movements, title='Movement', products=products, locations=locations, label='Search Movement')
 
 @movements_bp.route("/movements")
 def movements():

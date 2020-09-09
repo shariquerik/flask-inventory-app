@@ -31,4 +31,4 @@ def search_dashboard():
     product = Product.query
     qty = Movement.query
     movements = list(dict.fromkeys(movements))
-    return render_template('dashboard.html', title='Dashboard', movements=movements, qty=qty, product=product)
+    return render_template('dashboard.html', title='Dashboard', movements=movements, qty=qty, product=product, label='Search Dashboard')

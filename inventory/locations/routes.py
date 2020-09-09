@@ -14,7 +14,7 @@ locations_bp = Blueprint('locations_bp', __name__)
 def search_location():
     query = request.args.get('query')
     locations = Location.query.filter(Location.location_name.contains(query)).all()
-    return render_template('locations.html', locations=locations, title='Location')
+    return render_template('locations.html', locations=locations, title='Location', label='Search Location')
 
 @locations_bp.route('/locations', methods=['GET'])
 def locations():

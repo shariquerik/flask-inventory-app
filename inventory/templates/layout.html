@@ -77,7 +77,7 @@
                     <div class="flex sm:justify-between w-full sm:max-w-lg sm:flex-1 mt-2">
                         <div class="flex w-full sm:max-w-lg sm:flex-1">
                             <div class="hidden sm:flex content-center sm:flex-wrap mr-2 ml-8">
-                                {% if title != 'Dashboard' %}
+                                {% if title != 'Dashboard' and label != 'Search Product' and label != 'Search Location' and label != 'Search Movement' %}
                                     <a href="{% if title == 'Product' %} {{ url_for('products_bp.new_product') }} {% elif title == 'Location' %} {{ url_for('locations_bp.new_location') }} {% elif title == 'Movement' %} {{ url_for('movements_bp.new_movement') }} {% endif %}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded cursor-pointer" >{{ label }}</a>
                                 {% endif %}
                             </div>
