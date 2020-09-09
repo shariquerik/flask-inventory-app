@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-css": "tailwindcss build src/styles.css -o inventory/static/styles.css"
+    "build-css": "NODE_ENV=production tailwindcss build src/styles.css -o inventory/static/styles.css"
   },
   "keywords": [],
   "author": "",
