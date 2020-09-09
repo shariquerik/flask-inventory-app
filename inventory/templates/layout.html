@@ -31,46 +31,53 @@
 </head>
 <body class="flex flex-col h-screen bg-indigo-100 relative">
     <header class="text-gray-300 bg-gray-900 body-font">
-        <div class="container mx-auto flex flex-wrap py-3 px-5 flex-col lg:flex-row items-center">
+        <div class="container mx-auto flex flex-wrap py-3 px-3 xs:px-5 flex-col lg:flex-row items-center">
             <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" class="w-10 h-10 text-white bg-indigo-500 rounded-full" viewBox="-7 -5 38 38">
                     <path d="M11 13.75a.752.752 0 0 0-.75-.75H6.5v3a1 1 0 0 1-2 0v-3H.75a.752.752 0 0 0-.75.75v9.5c0 .413.337.75.75.75h9.5c.412 0 .75-.337.75-.75zM24 13.75a.752.752 0 0 0-.75-.75H19.5v3a1 1 0 0 1-2 0v-3h-3.75a.752.752 0 0 0-.75.75v9.5c0 .413.337.75.75.75h9.5c.412 0 .75-.337.75-.75zM17.5.75a.753.753 0 0 0-.75-.75H13v3a1 1 0 0 1-2 0V0H7.25a.752.752 0 0 0-.75.75v9.5c0 .413.337.75.75.75h9.5c.412 0 .75-.337.75-.75z"/>
                 </svg>
                 <span class="ml-3 text-2xl">Inventory App</span>
             </a>
-            <nav class="lg:ml-auto flex flex-wrap text-base sm:text-lg font-semibold mt-2 -mb-4">
-                <a href="{{ url_for('dashboard_bp.dashboard') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Dashboard' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-4 sm:px-8 py-4">Dashboard</div></a>
-                <a href="{{ url_for('products_bp.products') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Product' or title == 'search_product' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-4 sm:px-8 py-4">Products</div></a>
-                <a href="{{ url_for('locations_bp.locations') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Location' or title == 'search_location' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-4 sm:px-8 py-4">Locations</div></a>
-                <a href="{{ url_for('movements_bp.movements') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Movement' or title == 'search_movement' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-4 sm:px-8 py-4">Movements</div></a>
+            <nav class="lg:ml-auto flex flex-wrap text-sm sm:text-lg font-semibold mt-2 -mb-4">
+                <a href="{{ url_for('dashboard_bp.dashboard') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Dashboard' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-2 xs:px-4 sm:px-8 py-3">Dashboard</div></a>
+                <a href="{{ url_for('products_bp.products') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Product' or title == 'search_product' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-2 xs:px-4 sm:px-8 py-3">Products</div></a>
+                <a href="{{ url_for('locations_bp.locations') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Location' or title == 'search_location' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-2 xs:px-4 sm:px-8 py-3">Locations</div></a>
+                <a href="{{ url_for('movements_bp.movements') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Movement' or title == 'search_movement' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-2 xs:px-4 sm:px-8 py-3">Movements</div></a>
             </nav>
         </div>
         <!-- <div class="container mx-auto flex-wrap flex-col md:flex-row items-center"></div> -->
     </header>
     <section id="search">
         {% if title == 'Product' or title == 'Location' or title == 'Movement' or title == 'Dashboard' %}
-            <div class="container mx-auto flex-wrap flex-col md:flex-row items-center bg-indigo-100 text-gray-900 px-12 sm:px-8 {% if title == 'Dashboard' or title == 'Movement' %} sm:px-16 lg:px-24 {% endif %}">
-                <form class="flex justify-between py-3 pt-5" method="GET" action="search_{{ title.lower() }}">
-                    <div class="flex content-center flex-wrap">
-                        <h1 class="text-2xl font-semibold">{{ title }}s</h1>
-                    </div>
-                    <div class="flex max-w-lg sm:flex-1">
-                        <div class="flex content-center flex-wrap mr-2 ml-8">
-                            {% if title == 'Product' %}
-                                <a href="{{ url_for('products_bp.new_product') }}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded cursor-pointer" >Add Product</a>
-                            {% elif title == 'Location' %}
-                                <a href="{{ url_for('locations_bp.new_location') }}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded cursor-pointer">Add Location</a>
-                            {% elif title == 'Movement' %}
-                                <a href="{{ url_for('movements_bp.new_movement') }}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded cursor-pointer">Move Item</a>
+            <div class="container mx-auto flex-wrap flex-col md:flex-row items-center bg-indigo-100 text-gray-900 px-10 sm:px-8 {% if title == 'Dashboard' or title == 'Movement' %} sm:px-16 lg:px-24 {% endif %}">
+                <form class="flex flex-wrap sm:flex-no-wrap sm:justify-between py-3 pt-5" method="GET" action="search_{{ title.lower() }}">
+                    <div class="flex flex-1 sm:flex-initial justify-between self-center content-center">
+                        <div >
+                            <h1 class="text-2xl font-semibold">{{ title }}s</h1>
+                        </div>
+                        <div class="flex sm:hidden self-center text-xs content-center pr-2">
+                            {% if title != 'Dashboard' %}
+                                <a href="{% if title == 'Product' %} {{ url_for('products_bp.new_product') }} {% elif title == 'Location' %} {{ url_for('locations_bp.new_location') }} {% elif title == 'Movement' %} {{ url_for('movements_bp.new_movement') }} {% endif %}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-3 px-3 rounded-full cursor-pointer" >
+                                    <svg class="fill-current text-gray-100-600 h-4 w-4" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
+                                </a>
                             {% endif %}
                         </div>
-                        <div class="flex content-center flex-wrap relative flex-1">
-                            <input type="text" class="p-2 pl-5 rounded-lg border-2 focus:outline-none w-full" placeholder="Search" id="query" name="query">
-                            <button class="absolute pt-4 pb-3 px-4 right-0 focus:outline-none" type="submit">
-                                <svg class="fill-current text-gray-600 h-4 w-4" viewBox="0 0 18 18">
-                                    <path d="M12.5 11h-.79l-.28-.27A6.471 6.471 0 0013 6.5 6.5 6.5 0 106.5 13c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L17.49 16l-4.99-5zm-6 0C4.01 11 2 8.99 2 6.5S4.01 2 6.5 2 11 4.01 11 6.5 8.99 11 6.5 11z"/>
-                                </svg>
-                            </button>
+                    </div>
+                    <div class="flex sm:justify-between w-full sm:max-w-lg sm:flex-1 mt-2">
+                        <div class="flex w-full sm:max-w-lg sm:flex-1">
+                            <div class="hidden sm:flex content-center sm:flex-wrap mr-2 ml-8">
+                                {% if title != 'Dashboard' %}
+                                    <a href="{% if title == 'Product' %} {{ url_for('products_bp.new_product') }} {% elif title == 'Location' %} {{ url_for('locations_bp.new_location') }} {% elif title == 'Movement' %} {{ url_for('movements_bp.new_movement') }} {% endif %}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded cursor-pointer" >{{ label }}</a>
+                                {% endif %}
+                            </div>
+                            <div class="flex content-center sm:flex-wrap relative flex-1">
+                                <input type="text" class="p-2 pl-5 rounded-lg border-2 focus:outline-none w-full" placeholder="Search" id="query" name="query">
+                                <button class="absolute pt-4 pb-3 px-4 right-0 focus:outline-none" type="submit">
+                                    <svg class="fill-current text-gray-600 h-4 w-4" viewBox="0 0 18 18">
+                                        <path d="M12.5 11h-.79l-.28-.27A6.471 6.471 0 0013 6.5 6.5 6.5 0 106.5 13c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L17.49 16l-4.99-5zm-6 0C4.01 11 2 8.99 2 6.5S4.01 2 6.5 2 11 4.01 11 6.5 8.99 11 6.5 11z"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>

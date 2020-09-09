@@ -17,7 +17,7 @@ def search_product():
 @products_bp.route('/products', methods=['GET', 'POST'])
 def products():
     products = Product.query.order_by(Product.product_name).all()
-    return render_template('products.html', products=products, title='Product')
+    return render_template('products.html', products=products, title='Product', label='Add Product')
 
 @products_bp.route('/products/new', methods=['GET', 'POST'])
 def new_product():

@@ -19,7 +19,7 @@ def search_location():
 @locations_bp.route('/locations', methods=['GET'])
 def locations():
     locations = Location.query.order_by(Location.location_name).all()
-    return render_template('locations.html', locations=locations, title='Location')
+    return render_template('locations.html', locations=locations, title='Location', label='Add Location')
 
 @locations_bp.route('/locations/new', methods=['GET', 'POST'])
 def new_location():

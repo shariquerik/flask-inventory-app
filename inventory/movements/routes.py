@@ -80,7 +80,7 @@ def movements():
     movements = StaticMovement.query.order_by(StaticMovement.timestamp.desc()).all()
     products = Product.query
     locations = Location.query
-    return render_template('movements.html', title='Movement',movements=movements, products=products, locations=locations)
+    return render_template('movements.html', title='Movement',movements=movements, products=products, locations=locations, label="Move Item")
 
 @movements_bp.route("/movements/new", methods=['GET', 'POST'])
 def new_movement():
