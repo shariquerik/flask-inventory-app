@@ -1,5 +1,9 @@
 from inventory import db
 from datetime import datetime
+import pytz
+
+utc_now = pytz.utc.localize(datetime.utcnow())
+datetime = utc_now.astimezone(pytz.timezone("Asia/Kolkata"))
 
 
 class Product(db.Model):

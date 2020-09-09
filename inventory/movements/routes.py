@@ -3,6 +3,10 @@ from inventory import db
 from inventory.movements.forms import MovementForm
 from inventory.models import Product, Location, Movement, StaticMovement
 from datetime import datetime
+import pytz
+
+utc_now = pytz.utc.localize(datetime.utcnow())
+datetime = utc_now.astimezone(pytz.timezone("Asia/Kolkata"))
 
 movements_bp = Blueprint('movements_bp', __name__)
 
