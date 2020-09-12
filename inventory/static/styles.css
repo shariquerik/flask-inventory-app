@@ -986,16 +986,16 @@ video {
   height: 100vh;
 }
 
+.text-xxs {
+  font-size: 0.65rem;
+}
+
 .text-xs {
   font-size: 0.75rem;
 }
 
 .text-sm {
   font-size: 0.875rem;
-}
-
-.text-base {
-  font-size: 1rem;
 }
 
 .text-lg {
@@ -1498,12 +1498,12 @@ video {
   width: 2.5rem;
 }
 
-.w-40 {
-  width: 10rem;
+.w-32 {
+  width: 8rem;
 }
 
-.w-64 {
-  width: 16rem;
+.w-40 {
+  width: 10rem;
 }
 
 .w-1\/2 {
@@ -1640,6 +1640,10 @@ video {
 
   .xs\:text-lg {
     font-size: 1.125rem;
+  }
+
+  .xs\:ml-3 {
+    margin-left: 0.75rem;
   }
 
   .xs\:px-4 {
@@ -1810,6 +1814,10 @@ video {
 
   .sm\:w-8 {
     width: 2rem;
+  }
+
+  .sm\:w-56 {
+    width: 14rem;
   }
 }
 

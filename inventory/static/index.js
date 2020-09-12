@@ -2,14 +2,17 @@ let direction = false;
 
 let gridButton = document.getElementById('grid');
 let listButton = document.getElementById('list');
+let parentGrid = document.getElementById('parentGrid');
 let productsGrid = document.getElementsByClassName('productsGrid');
 let productsList = document.getElementsByClassName('productsList');
 let locationsGrid = document.getElementsByClassName('locationsGrid');
 let locationsList = document.getElementsByClassName('locationsList');
 
+
 function changeToGrid(){
     listButton.classList.remove("active");
     gridButton.classList.add("active");
+    parentGrid.classList.add("flex");
     for(i=0; i<productsGrid.length; i++){
         productsGrid[i].classList.remove("hidden");
         productsList[i].classList.add("hidden");
@@ -22,6 +25,7 @@ function changeToGrid(){
 function changeToList(){
     gridButton.classList.remove("active");
     listButton.classList.add("active");
+    parentGrid.classList.remove("flex");
     for(i=0; i<productsGrid.length; i++){
         productsGrid[i].classList.add("hidden");
         productsList[i].classList.remove("hidden");
