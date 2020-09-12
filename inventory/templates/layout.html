@@ -1,139 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/styles.css">
-    <title>Inventory App</title>
-    
-    <style>
-    
-        /*Footer open/load animation*/
-        .alert-footer {
-            -webkit-animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-                    animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;	
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/styles.css">
+        <title>Inventory App</title>
 
-        /*Footer close animation*/
-        .alert-footer input:checked ~ * {
-            -webkit-animation: slide-out-bottom 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
-                    animation: slide-out-bottom 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
-        }
-
-        /*Toast open/load animation*/
-        .alert-toast {
-            -webkit-animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-                    animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-        }
-    
-        /*Toast close animation*/
-        .alert-toast input:checked ~ * {
-            -webkit-animation: fade-out-right 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-                    animation: fade-out-right 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-        }
-    
-        /* -------------------------------------------------------------
-         * Animations generated using Animista * w: http://animista.net, 
-         * ---------------------------------------------------------- */
-    
-        @-webkit-keyframes slide-in-top{0%{-webkit-transform:translateY(-1000px);transform:translateY(-1000px);opacity:0}100%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}}@keyframes slide-in-top{0%{-webkit-transform:translateY(-1000px);transform:translateY(-1000px);opacity:0}100%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}}@-webkit-keyframes slide-out-top{0%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}100%{-webkit-transform:translateY(-1000px);transform:translateY(-1000px);opacity:0}}@keyframes slide-out-top{0%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}100%{-webkit-transform:translateY(-1000px);transform:translateY(-1000px);opacity:0}}@-webkit-keyframes slide-in-bottom{0%{-webkit-transform:translateY(1000px);transform:translateY(1000px);opacity:0}100%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}}@keyframes slide-in-bottom{0%{-webkit-transform:translateY(1000px);transform:translateY(1000px);opacity:0}100%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}}@-webkit-keyframes slide-out-bottom{0%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}100%{-webkit-transform:translateY(1000px);transform:translateY(1000px);opacity:0}}@keyframes slide-out-bottom{0%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}100%{-webkit-transform:translateY(1000px);transform:translateY(1000px);opacity:0}}@-webkit-keyframes slide-in-right{0%{-webkit-transform:translateX(1000px);transform:translateX(1000px);opacity:0}100%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}}@keyframes slide-in-right{0%{-webkit-transform:translateX(1000px);transform:translateX(1000px);opacity:0}100%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}}@-webkit-keyframes fade-out-right{0%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}100%{-webkit-transform:translateX(50px);transform:translateX(50px);opacity:0}}@keyframes fade-out-right{0%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}100%{-webkit-transform:translateX(50px);transform:translateX(50px);opacity:0}}
+        <style>
         
-      </style>
-</head>
-<body class="flex flex-col h-screen bg-indigo-100 relative">
-    <header class="text-gray-300 bg-gray-900 body-font">
-        <div class="container mx-auto flex flex-wrap py-3 px-3 xs:px-5 flex-col lg:flex-row items-center">
-            <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" class="w-10 h-10 text-white bg-indigo-500 rounded-full" viewBox="-7 -5 38 38">
-                    <path d="M11 13.75a.752.752 0 0 0-.75-.75H6.5v3a1 1 0 0 1-2 0v-3H.75a.752.752 0 0 0-.75.75v9.5c0 .413.337.75.75.75h9.5c.412 0 .75-.337.75-.75zM24 13.75a.752.752 0 0 0-.75-.75H19.5v3a1 1 0 0 1-2 0v-3h-3.75a.752.752 0 0 0-.75.75v9.5c0 .413.337.75.75.75h9.5c.412 0 .75-.337.75-.75zM17.5.75a.753.753 0 0 0-.75-.75H13v3a1 1 0 0 1-2 0V0H7.25a.752.752 0 0 0-.75.75v9.5c0 .413.337.75.75.75h9.5c.412 0 .75-.337.75-.75z"/>
-                </svg>
-                <span class="ml-3 text-2xl">Inventory App</span>
-            </a>
-            <nav class="lg:ml-auto flex flex-wrap text-sm sm:text-lg font-semibold mt-2 -mb-4">
-                <a href="{{ url_for('dashboard_bp.dashboard') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Dashboard' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-2 xs:px-4 sm:px-8 py-3">Dashboard</div></a>
-                <a href="{{ url_for('products_bp.products') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Product' or label == 'Product' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-2 xs:px-4 sm:px-8 py-3">Products</div></a>
-                <a href="{{ url_for('locations_bp.locations') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Location' or label == 'Location' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-2 xs:px-4 sm:px-8 py-3">Locations</div></a>
-                <a href="{{ url_for('movements_bp.movements') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Movement' or label == 'Movement' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-2 xs:px-4 sm:px-8 py-3">Movements</div></a>
-            </nav>
-        </div>
-        <!-- <div class="container mx-auto flex-wrap flex-col md:flex-row items-center"></div> -->
-    </header>
-    <section id="search">
-        {% if title == 'Product' or title == 'Location' or title == 'Movement' or title == 'Dashboard' or title == 'Search Result' %}
-            <div class="container mx-auto flex-wrap flex-col md:flex-row items-center bg-indigo-100 text-gray-900 px-10 sm:px-8 {% if title == 'Dashboard' or title == 'Movement' or label == 'Movement' %} sm:px-16 lg:px-24 {% endif %}">
-                <form class="flex flex-wrap sm:flex-no-wrap sm:justify-between py-3 pt-5" method="GET"  action="{% if title == 'Search Result' %} search_{{ label.lower() }} {% else %} search_{{ title.lower() }} {% endif %}">
-                    <div class="flex flex-1 sm:flex-initial justify-between self-center content-center">
-                        <div >
-                            <h1 class="text-2xl font-semibold">{{ title }}s</h1>
-                        </div>
-                        <div class="flex sm:hidden self-center text-xs content-center pr-2">
-                            {% if title != 'Dashboard' and title != 'Search Result' %}
-                                <a href="{% if title == 'Product' %} {{ url_for('products_bp.new_product') }} {% elif title == 'Location' %} {{ url_for('locations_bp.new_location') }} {% elif title == 'Movement' %} {{ url_for('movements_bp.new_movement') }} {% endif %}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-3 px-3 rounded-full cursor-pointer" >
-                                    <svg class="fill-current text-gray-100-600 h-4 w-4" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
-                                </a>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="flex sm:justify-between w-full sm:max-w-lg sm:flex-1 mt-2">
-                        <div class="flex w-full sm:max-w-lg sm:flex-1">
-                            <div class="hidden sm:flex content-center sm:flex-wrap mr-2 ml-8">
+            /*Footer open/load animation*/
+            .alert-footer {
+                -webkit-animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                        animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;	
+            }
+
+            /*Footer close animation*/
+            .alert-footer input:checked ~ * {
+                -webkit-animation: slide-out-bottom 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+                        animation: slide-out-bottom 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+            }
+
+            /*Toast open/load animation*/
+            .alert-toast {
+                -webkit-animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                        animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            }
+        
+            /*Toast close animation*/
+            .alert-toast input:checked ~ * {
+                -webkit-animation: fade-out-right 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                        animation: fade-out-right 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            }
+        
+            /* -------------------------------------------------------------
+            * Animations generated using Animista * w: http://animista.net, 
+            * ---------------------------------------------------------- */
+        
+            @-webkit-keyframes slide-in-top{0%{-webkit-transform:translateY(-1000px);transform:translateY(-1000px);opacity:0}100%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}}@keyframes slide-in-top{0%{-webkit-transform:translateY(-1000px);transform:translateY(-1000px);opacity:0}100%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}}@-webkit-keyframes slide-out-top{0%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}100%{-webkit-transform:translateY(-1000px);transform:translateY(-1000px);opacity:0}}@keyframes slide-out-top{0%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}100%{-webkit-transform:translateY(-1000px);transform:translateY(-1000px);opacity:0}}@-webkit-keyframes slide-in-bottom{0%{-webkit-transform:translateY(1000px);transform:translateY(1000px);opacity:0}100%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}}@keyframes slide-in-bottom{0%{-webkit-transform:translateY(1000px);transform:translateY(1000px);opacity:0}100%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}}@-webkit-keyframes slide-out-bottom{0%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}100%{-webkit-transform:translateY(1000px);transform:translateY(1000px);opacity:0}}@keyframes slide-out-bottom{0%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}100%{-webkit-transform:translateY(1000px);transform:translateY(1000px);opacity:0}}@-webkit-keyframes slide-in-right{0%{-webkit-transform:translateX(1000px);transform:translateX(1000px);opacity:0}100%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}}@keyframes slide-in-right{0%{-webkit-transform:translateX(1000px);transform:translateX(1000px);opacity:0}100%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}}@-webkit-keyframes fade-out-right{0%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}100%{-webkit-transform:translateX(50px);transform:translateX(50px);opacity:0}}@keyframes fade-out-right{0%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}100%{-webkit-transform:translateX(50px);transform:translateX(50px);opacity:0}}
+            
+        </style>
+
+        <style>
+            /*@apply bg-white text-blue-400 rounded-full;*/
+            .active {background: white; border-radius: 9999px; border-color: #cbd5e0; border-width: 2px; color: #63b3ed;}
+        </style>
+
+    </head>
+    <body class="flex flex-col h-screen bg-indigo-100 relative">
+        <header class="text-gray-300 bg-gray-900 body-font">
+            <div class="container mx-auto flex flex-wrap py-3 px-3 xs:px-5 flex-col lg:flex-row items-center">
+                <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" class="w-10 h-10 text-white bg-indigo-500 rounded-full" viewBox="-7 -5 38 38">
+                        <path d="M11 13.75a.752.752 0 0 0-.75-.75H6.5v3a1 1 0 0 1-2 0v-3H.75a.752.752 0 0 0-.75.75v9.5c0 .413.337.75.75.75h9.5c.412 0 .75-.337.75-.75zM24 13.75a.752.752 0 0 0-.75-.75H19.5v3a1 1 0 0 1-2 0v-3h-3.75a.752.752 0 0 0-.75.75v9.5c0 .413.337.75.75.75h9.5c.412 0 .75-.337.75-.75zM17.5.75a.753.753 0 0 0-.75-.75H13v3a1 1 0 0 1-2 0V0H7.25a.752.752 0 0 0-.75.75v9.5c0 .413.337.75.75.75h9.5c.412 0 .75-.337.75-.75z"/>
+                    </svg>
+                    <span class="ml-3 text-2xl">Inventory App</span>
+                </a>
+                <nav class="lg:ml-auto flex flex-wrap text-sm sm:text-lg font-semibold mt-2 -mb-4">
+                    <a href="{{ url_for('dashboard_bp.dashboard') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Dashboard' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-2 xs:px-4 sm:px-8 py-3">Dashboard</div></a>
+                    <a href="{{ url_for('products_bp.products') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Product' or label == 'Product' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-2 xs:px-4 sm:px-8 py-3">Products</div></a>
+                    <a href="{{ url_for('locations_bp.locations') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Location' or label == 'Location' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-2 xs:px-4 sm:px-8 py-3">Locations</div></a>
+                    <a href="{{ url_for('movements_bp.movements') }}" class="cursor-pointer"><div class="rounded-t-lg border-gray-900 {% if title == 'Movement' or label == 'Movement' %} border-t-2 border-l-2 border-r-2 bg-indigo-100 text-indigo-900 hover:text-indigo-900 {% endif %} hover:text-indigo-500 px-2 xs:px-4 sm:px-8 py-3">Movements</div></a>
+                </nav>
+            </div>
+            <!-- <div class="container mx-auto flex-wrap flex-col md:flex-row items-center"></div> -->
+        </header>
+        <section id="search">
+            {% if title == 'Product' or title == 'Location' or title == 'Movement' or title == 'Dashboard' or title == 'Search Result' %}
+                <div class="container mx-auto flex-wrap flex-col md:flex-row items-center bg-indigo-100 text-gray-900 px-10 sm:px-8 {% if title == 'Dashboard' or title == 'Movement' or label == 'Movement' %} sm:px-16 lg:px-24 {% endif %}">
+                    <form class="flex flex-wrap sm:flex-no-wrap sm:justify-between py-3 pt-5" method="GET"  action="{% if title == 'Search Result' %} search_{{ label.lower() }} {% else %} search_{{ title.lower() }} {% endif %}">
+                        <div class="flex flex-1 sm:flex-initial justify-between self-center content-center">
+                            <div >
+                                <h1 class="text-2xl font-semibold">{{ title }}s</h1>
+                            </div>
+                            <div class="flex sm:hidden self-center text-xs content-center pr-2">
                                 {% if title != 'Dashboard' and title != 'Search Result' %}
-                                    <a href="{% if title == 'Product' %} {{ url_for('products_bp.new_product') }} {% elif title == 'Location' %} {{ url_for('locations_bp.new_location') }} {% elif title == 'Movement' %} {{ url_for('movements_bp.new_movement') }} {% endif %}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded cursor-pointer" >{{ label }}</a>
+                                    <a href="{% if title == 'Product' %} {{ url_for('products_bp.new_product') }} {% elif title == 'Location' %} {{ url_for('locations_bp.new_location') }} {% elif title == 'Movement' %} {{ url_for('movements_bp.new_movement') }} {% endif %}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-3 px-3 rounded-full cursor-pointer" >
+                                        <svg class="fill-current text-gray-100-600 h-4 w-4" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
+                                    </a>
                                 {% endif %}
                             </div>
-                            <div class="flex content-center sm:flex-wrap relative flex-1">
-                                <input type="text" class="p-2 pl-5 rounded-lg border-2 focus:outline-none w-full" placeholder="Search" id="query" name="query">
-                                <button class="absolute pt-4 pb-3 px-4 right-0 focus:outline-none" type="submit">
-                                    <svg class="fill-current text-gray-600 h-4 w-4" viewBox="0 0 18 18">
-                                        <path d="M12.5 11h-.79l-.28-.27A6.471 6.471 0 0013 6.5 6.5 6.5 0 106.5 13c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L17.49 16l-4.99-5zm-6 0C4.01 11 2 8.99 2 6.5S4.01 2 6.5 2 11 4.01 11 6.5 8.99 11 6.5 11z"/>
-                                    </svg>
-                                </button>
+                        </div>
+                        <div class="flex sm:justify-between w-full sm:max-w-lg sm:flex-1 mt-2">
+                            <div class="flex w-full sm:max-w-lg sm:flex-1">
+                                <div class="hidden sm:flex content-center sm:flex-wrap mr-2 ml-8">
+                                    {% if title != 'Dashboard' and title != 'Search Result' %}
+                                        <a href="{% if title == 'Product' %} {{ url_for('products_bp.new_product') }} {% elif title == 'Location' %} {{ url_for('locations_bp.new_location') }} {% elif title == 'Movement' %} {{ url_for('movements_bp.new_movement') }} {% endif %}" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded cursor-pointer" >{{ label }}</a>
+                                    {% endif %}
+                                </div>
+                                <div class="flex content-center sm:flex-wrap relative flex-1">
+                                    <input type="text" class="p-2 pl-5 rounded-lg border-2 focus:outline-none w-full" placeholder="Search" id="query" name="query">
+                                    <button class="absolute pt-4 pb-3 px-4 right-0 focus:outline-none" type="submit">
+                                        <svg class="fill-current text-gray-600 h-4 w-4" viewBox="0 0 18 18">
+                                            <path d="M12.5 11h-.79l-.28-.27A6.471 6.471 0 0013 6.5 6.5 6.5 0 106.5 13c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L17.49 16l-4.99-5zm-6 0C4.01 11 2 8.99 2 6.5S4.01 2 6.5 2 11 4.01 11 6.5 8.99 11 6.5 11z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                {% if title == 'Product' or title == 'Location' or title == 'Search Result' and label != 'Movement' %}
+                                    <div class="bg-gray-400 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded-full inline-flex ml-2">
+                                        <button type="button" onclick="changeToGrid()" class="inline-flex items-center duration-400 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 px-4 py-2 rounded-l-full active" id="grid">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fill-current text-indigo-400 w-4 h-4"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>
+                                        </button>
+                                        <button type="button" onclick="changeToList()" class="inline-flex items-center duration-400 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 px-4 py-2 rounded-r-full" id="list">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fill-current text-indigo-400 w-4 h-4"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+                                        </button>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-        {% endif %}
-    </section>
-    <section class="mainscreen bg-indigo-100 h-screen overflow-y-auto">
-        {% block content %}{% endblock %}
-    </section>
-    <section id="alert">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert-footer fixed bottom-0 right-0 mb-5 mr-5">
-                        <input type="checkbox" class="hidden" id="footeralert">
-                        <div class="flex items-center justify-between p-2">
-                            <label class="relative close cursor-pointer alert flex flex-row items-center {% if category == 'red' %} bg-red-200 border-red-300 {% elif category == 'green' %} bg-green-200 border-green-300 {% endif %} p-5 rounded border-b-2 " title="close" for="footeralert">
-                                <div class="alert-icon flex items-center {% if category == 'red' %} bg-red-100 border-red-500 {% elif category == 'green' %} bg-green-100 border-green-500 {% endif %} border-2 justify-center h-10 w-10 flex-shrink-0 rounded-full">
-                                    <span class="{% if category == 'red' %} text-red-500 {% elif category == 'green' %} text-green-500 {% endif %}">
-                                        <svg fill="currentColor" viewBox="0 0 20 20" class="h-6 w-6">
-                                            {% if category == 'red' %}
-                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"clip-rule="evenodd"></path>
-                                            {% elif category == 'green' %}
-                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                            {% endif %}
-                                        </svg>
-                                    </span>
-                                </div>
-                                <div class="alert-content ml-4">
-                                    <div class="alert-title font-semibold text-lg {% if category == 'red' %} text-red-800 {% elif category == 'green' %} text-green-800 {% endif %}">
-                                        {% if category == 'red' %}Error{% elif category == 'green' %}Success{% endif %}
-                                    </div>
-                                    <div class="flex items-start justify-between alert-description text-sm {% if category == 'red' %} text-red-600 {% elif category == 'green' %} text-green-600 {% endif %}">
-                                        {{ message }}
-                                        <svg class="absolute right-0 top-0 bottom-0 mt-3 mr-3 fill-current {% if category == 'red' %} text-red-800 {% elif category == 'green' %} text-green-800 {% endif %}" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                                            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                {% endfor %}
+                    </form>
+                </div>
             {% endif %}
-        {% endwith %}
-    </section>
-</body>
+        </section>
+        <section class="mainscreen bg-indigo-100 h-screen overflow-y-auto">
+            {% block content %}{% endblock %}
+        </section>
+        <section id="alert">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert-footer fixed bottom-0 right-0 mb-5 mr-5">
+                            <input type="checkbox" class="hidden" id="footeralert">
+                            <div class="flex items-center justify-between p-2">
+                                <label class="relative close cursor-pointer alert flex flex-row items-center {% if category == 'red' %} bg-red-200 border-red-300 {% elif category == 'green' %} bg-green-200 border-green-300 {% endif %} p-5 rounded border-b-2 " title="close" for="footeralert">
+                                    <div class="alert-icon flex items-center {% if category == 'red' %} bg-red-100 border-red-500 {% elif category == 'green' %} bg-green-100 border-green-500 {% endif %} border-2 justify-center h-10 w-10 flex-shrink-0 rounded-full">
+                                        <span class="{% if category == 'red' %} text-red-500 {% elif category == 'green' %} text-green-500 {% endif %}">
+                                            <svg fill="currentColor" viewBox="0 0 20 20" class="h-6 w-6">
+                                                {% if category == 'red' %}
+                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"clip-rule="evenodd"></path>
+                                                {% elif category == 'green' %}
+                                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                                {% endif %}
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div class="alert-content ml-4">
+                                        <div class="alert-title font-semibold text-lg {% if category == 'red' %} text-red-800 {% elif category == 'green' %} text-green-800 {% endif %}">
+                                            {% if category == 'red' %}Error{% elif category == 'green' %}Success{% endif %}
+                                        </div>
+                                        <div class="flex items-start justify-between alert-description text-sm {% if category == 'red' %} text-red-600 {% elif category == 'green' %} text-green-600 {% endif %}">
+                                            {{ message }}
+                                            <svg class="absolute right-0 top-0 bottom-0 mt-3 mr-3 fill-current {% if category == 'red' %} text-red-800 {% elif category == 'green' %} text-green-800 {% endif %}" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                                                <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </section>
+    </body>
+    <script src="../static/index.js"></script>
 </html>

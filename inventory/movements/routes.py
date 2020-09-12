@@ -65,19 +65,21 @@ def date_convertion():
 @movements_bp.route('/search_movement')
 def search_movement():
     query = request.args.get('query')
+    if not query:
+        return movements()
     product = Product.query.filter(Product.product_name.contains(query)).all()
     from_location = []
     to_location = []
-    movements = []
-    movements = StaticMovement.query.filter(StaticMovement.from_location.contains(query)).all()
-    movements = movements + StaticMovement.query.filter(StaticMovement.to_location.contains(query)).all()
+    searched_movements = []
+    searched_movements = StaticMovement.query.filter(StaticMovement.from_location.contains(query)).all()
+    searched_movements = searched_movements + StaticMovement.query.filter(StaticMovement.to_location.contains(query)).all()
     if product:
         for p in product:
-            movements = movements + StaticMovement.query.filter(StaticMovement.product_id==p.product_id).all()
+            searched_movements = searched_movements + StaticMovement.query.filter(StaticMovement.product_id==p.product_id).all()
     products = Product.query
     locations = Location.query
-    movements = list(dict.fromkeys(movements))
-    return render_template('movements.html', movements=movements, title='Search Result', products=products, locations=locations, label='Movement')
+    searched_movements = list(dict.fromkeys(searched_movements))
+    return render_template('movements.html', movements=searched_movements, title='Search Result', products=products, locations=locations, label='Movement')
 
 @movements_bp.route("/movements")
 def movements():

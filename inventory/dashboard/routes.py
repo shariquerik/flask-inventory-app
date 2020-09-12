@@ -1,4 +1,4 @@
-from flask import render_template, request, Blueprint
+from flask import render_template, redirect,url_for, request, Blueprint
 from inventory import db
 from inventory.models import Product, Movement
 
@@ -16,8 +16,11 @@ def dashboard():
 
 @dashboard_bp.route('/search_dashboard')
 def search_dashboard():
+    
     q = request.args.get('query')
     movements = []
+    if not q:
+        return dashboard()
     product = Product.query.filter(Product.product_name.contains(q)).all()
     lists = db.session.query(Movement.to_location, Movement.product_id).filter(Movement.from_location=="").distinct(Movement.to_location).all()
     for i in lists:
