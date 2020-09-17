@@ -8,7 +8,7 @@
                 </div>
             {% else %}
                 {% for location in locations %}
-                    <div class="w-1/2 md:w-1/3 lg:w-1/4 py-4 px-2 locationsGrid">
+                    <div class="locationsGrid w-1/2 md:w-1/3 lg:w-1/4 py-4 px-2">
                         <a href="{{ url_for('locations_bp.location', location_id=location.location_id) }}">
                             <div class="block relative h-32 sm:h-48 rounded overflow-hidden">
                                 <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="{{ url_for('static', filename='img/' + location.location_image_file) }}">
@@ -18,7 +18,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="hidden locationsList xs:ml-3 mt-4 lg:pr-20">
+                    <div class="hidden locationsList xs:ml-3 mt-4 lg:pr-20 w-full">
                         <a href="{{ url_for('locations_bp.location', location_id=location.location_id) }}" class="flex bg-white rounded-lg">
                             <div class="block relative w-32 sm:w-56 h-32 sm:h-48 overflow-hidden rounded-l-lg self-center">
                                 <img alt="car" class="object-cover object-center w-full h-full block" src="{{ url_for('static', filename='img/' + location.location_image_file) }}">
@@ -27,7 +27,7 @@
                                 <div class="font-semibold text-gray-900 pt-2 pb-1 pl-4 sm:pt-6 sm:px-8 text-sm xs:text-lg">{{ location.location_name }}</div>
                                 <div class="text-gray-600 text-xxs xs:text-sm pb-2 pl-4 sm:pb-6 sm:px-8">
                                     {% if not location.location_description %}
-                                        <span class="max-lines">This is a default description for location, please update the location with a brief description.</span>
+                                        <span class="max-lines">This is a default description for location, please update the location with a brief description</span>
                                     {% else %}
                                         <span class="max-lines">{{ location.location_description }}</span>
                                     {% endif %}

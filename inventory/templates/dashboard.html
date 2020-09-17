@@ -6,13 +6,13 @@
                 <thead class="cursor-pointer">
                     <tr >
                         {% if movements %}
-                            <th onclick="sortedTable(1)" class="relative cursor-pointer p-3 font-bold uppercase bg-indigo-200 text-indigo-800 border-r border-gray-300 hidden lg:table-cell rounded-tl-lg">
+                            <th id="product" data-id='1' class="relative cursor-pointer p-3 font-bold uppercase bg-indigo-200 text-indigo-800 border-r border-gray-300 hidden lg:table-cell rounded-tl-lg">
                                 Product 
                             </th>
-                            <th onclick="sortedTable(3)" class="relative cursor-pointer p-3 font-bold uppercase bg-indigo-200 text-indigo-800 border-r border-gray-300 hidden lg:table-cell">
+                            <th id="location" data-id='3' class="relative cursor-pointer p-3 font-bold uppercase bg-indigo-200 text-indigo-800 border-r border-gray-300 hidden lg:table-cell">
                                 Warehouse
                             </th>
-                            <th onclick="sortedTable(5)" class="relative cursor-pointer p-3 font-bold uppercase bg-indigo-200 text-indigo-800 hidden lg:table-cell rounded-tr-lg">
+                            <th id="qty" data-id='5' class="relative cursor-pointer p-3 font-bold uppercase bg-indigo-200 text-indigo-800 hidden lg:table-cell rounded-tr-lg">
                                 Quantity
                             </th>
                         {% endif %}

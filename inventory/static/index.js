@@ -1,40 +1,35 @@
+$(document).ready(function(){
+
+    $('#gridButton').click(function(){
+        $("#listButton").removeClass("active");
+        $("#gridButton").addClass("active");
+        $("#parentGrid").addClass("flex");
+
+        $('.productsGrid').removeClass('hidden');
+        $('.productsList').addClass('hidden');
+
+        $('.locationsGrid').removeClass('hidden');
+        $('.locationsList').addClass('hidden');
+    })
+
+    $('#listButton').click(function(){ 
+        $("#listButton").addClass("active");
+        $("#gridButton").removeClass("active");
+        $("#parentGrid").removeClass("flex");
+    
+        $('.productsGrid').addClass('hidden');
+        $('.productsList').removeClass('hidden');
+
+        $('.locationsGrid').addClass('hidden');
+        $('.locationsList').removeClass('hidden');
+    })
+
+    $('#product, #location, #qty').click(function(){
+        sortedTable($(this).attr('data-id'));
+    })
+
+});
 let direction = false;
-
-let gridButton = document.getElementById('grid');
-let listButton = document.getElementById('list');
-let parentGrid = document.getElementById('parentGrid');
-let productsGrid = document.getElementsByClassName('productsGrid');
-let productsList = document.getElementsByClassName('productsList');
-let locationsGrid = document.getElementsByClassName('locationsGrid');
-let locationsList = document.getElementsByClassName('locationsList');
-
-
-function changeToGrid(){
-    listButton.classList.remove("active");
-    gridButton.classList.add("active");
-    parentGrid.classList.add("flex");
-    for(i=0; i<productsGrid.length; i++){
-        productsGrid[i].classList.remove("hidden");
-        productsList[i].classList.add("hidden");
-    }
-    for(i=0; i<locationsGrid.length; i++){
-        locationsGrid[i].classList.remove("hidden");
-        locationsList[i].classList.add("hidden");
-    }
-}
-function changeToList(){
-    gridButton.classList.remove("active");
-    listButton.classList.add("active");
-    parentGrid.classList.remove("flex");
-    for(i=0; i<productsGrid.length; i++){
-        productsGrid[i].classList.add("hidden");
-        productsList[i].classList.remove("hidden");
-    }
-    for(i=0; i<locationsGrid.length; i++){
-        locationsGrid[i].classList.add("hidden");
-        locationsList[i].classList.remove("hidden");
-    }
-}
 
 function sortedTable(col) {
     let table = document.getElementById('dashboardTable');
@@ -42,7 +37,8 @@ function sortedTable(col) {
     let a = '';
     let b = '';
     let z = true;
-    loop(col);
+    let stop = true;
+    loop();
     function loop(){
         for(i=1; i<rows.length - 1; i++){
             a = rows[i].childNodes[col].innerText;
